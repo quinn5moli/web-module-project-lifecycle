@@ -7,6 +7,18 @@
   pointer-events: none;
 }
 
+.App form {
+  padding-bottom: 50px;
+}
+
+.gitUser {
+  color: dodgerblue;
+}
+
+.gitUser img {
+  width: 25%;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;

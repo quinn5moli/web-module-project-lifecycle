@@ -1,25 +1,56 @@
-import logo from './logo.svg';
+import React from 'react';
+import Card from './components/Card';
+import axios from 'axios';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  state = {
+    user: '',
+    currentUser: 'quinn5moli',
+    userData: []
+  };
+
+  getData = (user) => {
+    axios.get(`https://api.github.com/users/${user}`)
+      .then(res => this.setState({
+        ...this.state,
+        user: '',
+        userData: res.data}))
+  }
+  
+
+componentDidMount(){
+  this.getData(this.state.currentUser)
+};
+
+  handleChange = (e) => {
+    this.setState({
+      user: e.target.value
+    })
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault()
+    this.getData(this.state.user)
+
+  }
+
+
+  render() {
+    console.log('App: Renders Dom');
+    return (
+      <div className="App">
+        <h3>Search GitHub users</h3>
+        <form onSubmit={this.handleSubmit}>
+          <input onChange={this.handleChange} type="text" user={this.state.user}/>
+          <button>View</button>
+        </form>
+        <div className="gitUser">
+          <Card userData={this.state.userData} />
+        </div>
+      </div>
+    )
+  }
 }
 
-export default App;
+  export default App;
